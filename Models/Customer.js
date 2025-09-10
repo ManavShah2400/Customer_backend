@@ -6,7 +6,8 @@ const customerSchema = new Schema({
     phone_number: { type: String, requried: true },
     address: { type: String },
     driver_license: { type: String, requried: true },
-    company_name: { type: String, requried: true }
+    company_name: { type: String, requried: true },
+    bank_name: { type: String }
 })
 
 const cusotmerModel = mongoose.model("Customer", customerSchema);

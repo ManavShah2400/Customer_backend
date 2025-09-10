@@ -4,10 +4,10 @@ const cusotmerModel = require('../Models/Customer');
 //Add new cusomter
 const createCustomer = async (req, res) => {
     try {
-        const { name, phone_number, address, driver_license, company_name } = req.body;
+        const { name, phone_number, address, driver_license, company_name, bank_name } = req.body;
         const existingCustomer = await cusotmerModel.findOne({ driver_license });
         if (existingCustomer) return res.status(400).json({ message: "Customer already exists", success: false });
-        const customer = new cusotmerModel({ name, phone_number, address, driver_license, company_name });
+        const customer = new cusotmerModel({ name, phone_number, address, driver_license, company_name, bank_name });
         await customer.save();
         res.status(201).json({ message: "Customer Created Successfully", success: true, data: customer });
     } catch (err) {
@@ -75,7 +75,9 @@ const searchCustomer = async (req, res) => {
         const customer = await cusotmerModel.find({
             $or: [
                 { name: { $regex: query, $options: 'i' } },          // partial match, case-insensitive
-                { driver_license: { $regex: query, $options: 'i' } } // partial match, case-insensitive
+                { driver_license: { $regex: query, $options: 'i' } }, // partial match, case-insensitive
+                { company_name: { $regex: query, $options: 'i' } },
+                { bank_name: { $regex: query, $options: 'i' } }
             ]
         });
         if (!query) return res.status(200).json({ message: "All customer list", success: true, data: all_customer });
