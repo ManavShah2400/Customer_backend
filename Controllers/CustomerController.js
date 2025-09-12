@@ -30,7 +30,7 @@ const editCustomer = async (req, res) => {
     const { id } = req.params;
     const updateData = req.body;
     try {
-        if (!updateData.name || !updateData.phone_number || !updateData.driver_license) {
+        if (!updateData.name || !updateData.driver_license) {
             return res.status(400).json({ message: "Missing required fields", success: false });
         }
         const updatedItem = await cusotmerModel.findByIdAndUpdate(id, updateData, {
